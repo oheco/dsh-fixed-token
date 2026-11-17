@@ -1,0 +1,16 @@
+# Bundle patch for @oheco/dsh-fixed-token.
+#
+# The token is deliberately NOT set here. On its first activation the plugin
+# generates a random token and writes it into the profile's own patch layer,
+# which outranks every bundle layer:
+#
+#   # $DSH_HOME/profiles/<profile>/cordis.patch.yml
+#   - id: oheco-fixed-token
+#     config:
+#       token: <generated>
+#
+# Change it from the plugin page, or edit that row by hand and restart.
+- insert:
+    - id: oheco-fixed-token
+      name: '@oheco/dsh-fixed-token'
+      config: {}

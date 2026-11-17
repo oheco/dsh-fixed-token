@@ -1,0 +1,37 @@
+{
+  "name": "@oheco/dsh-fixed-token",
+  "version": "0.1.0",
+  "description": "固定 DSH Web 启动 token：首次加载自动生成并写入插件配置，可在插件页查看、复制、修改和重新生成",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/oheco/dsh-fixed-token.git" },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.mjs",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": ["index.js", "client.mjs", "cordis.patch.yml", "locale/*.json", "README.md", "LICENSE"],
+  "scripts": {
+    "check": "node --check index.js && node --check client.mjs && node -e \"for (const f of ['package.json','locale/zh.json','locale/en.json']) JSON.parse(require('node:fs').readFileSync(f,'utf8'))\"",
+    "test": "node --import ./test/runtime-loader.js --test test/*.test.js",
+    "e2e": "bash test/e2e.sh"
+  },
+  "engines": { "node": ">=24" },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "*"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}
